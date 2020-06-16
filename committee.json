@@ -1,0 +1,90 @@
+{
+  "exec": {
+    "President": {
+      "name": "Chloe Jones",
+      "major": "Computer Science"
+    },
+    "VP of Communications": {
+      "name": "Lindsey Sommerfeldt",
+      "major": "Industrial Engineeering"
+    },
+    "VP of External Relations": {
+      "name": "Riley Jackson", 
+      "major": "Electrical Engineering"
+    },
+    "VP of Internal Relations": {
+      "name": "Lauren Hyde",
+      "major": ""
+    },
+    "Treasurer": {
+      "name": "Emma Flinner",
+      "major": "Industrial Engineering"
+    },
+    "Delegate to the Dean's Board": {
+      "name": "Drake Silvis",
+      "major": "Chemical Engineering"
+    }
+  },
+  "committees": {
+    "Diversity": {
+      "head": {
+        "name": "Camila Leiva",
+        "major": "Chemical Engineeering"
+      }
+    },
+    "K-12": {
+      "head": {
+        "name": "Abigail Penfield",
+        "major": "Biomedical Engineering"
+      }
+    },
+    "New Members": {
+      "head": {
+        "name": "Micah Sandhu",
+        "major": "Mechanical Engineering"
+      }
+    },
+    "Professional Outreach": {
+      "head": {
+        "name": "Julia Olson",
+        "major": "Industrial Engineering"
+      }
+    },
+    "Social": {
+      "head": {
+        "name": "Bella Bowers",
+        "major": ""
+      }
+    },
+    "Merch": {
+      "head": {
+        "name": "Lauren Baratta",
+        "major": "Chemical Engineering"
+      }
+    },
+    "Public Relations": {
+      "head": {
+        "name": "Diana de la Cruz",
+        "major": "Chemical Engineering"
+      }
+    },
+    "Large Events": {
+      "head": {
+        "name": "Paul Orton",
+        "major": "Computer Science"
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
+    },
+    "Service": {
+      "head": {
+        "name": "Ethan Rackers",
+        "major": ""
+      }
+    }
+  }
+}
