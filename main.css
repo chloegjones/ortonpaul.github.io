@@ -56,6 +56,7 @@ h1 {
 
 #committeeList > button {
   height: 40px;
+  font-size: 1.2vw;
 }
 
 #committee {
@@ -92,6 +93,10 @@ h1 {
 
 .contactContainer > form {
   text-align: left;
+}
+
+#formSubmitWrapper {
+  text-align: right;
 }
 
 #centeredButtonWrapper {
