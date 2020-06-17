@@ -39,9 +39,13 @@
       }
     },
     "New Members": {
-      "head": {
+      "head1": {
         "name": "Micah Sandhu",
         "major": "Mechanical Engineering"
+      },
+      "head2": {
+        "name": "Morgan Hanley",
+        "major": ""
       }
     },
     "Professional Outreach": {

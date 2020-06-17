@@ -12,93 +12,93 @@ function toTop() {
   document.documentElement.scrollTop = 0;
 }
 
-function getCommittee() {
-  $.getJSON("committee.json", function(MESC){
-    let exec = MESC.exec
+function loadCommittee() {
+  loadButtons();
+  changeCommittee('Exec');
+}
+
+function loadButtons() {
+  $.getJSON("committee.json", function(committeeJSON){
+    let buttonsHTML = '';
     
-    let execHTML = '';
-        
-    for (office in exec) {
-      let title = office.replace(/ /g, '_');
-      title = title.replace(/'/g, '');
-      let name = exec[office].name;
-      let major = exec[office].major;
-      
-      execHTML += '<h5>' + office + '</h5>';
-      
-      let url = 'committeeHeadshots/' + encodeURI(name) + '.png';
-      
-      $.ajax({
-        url: url,
-        type: 'HEAD',
-        error: function() {
-            $('#image' + title).attr('src', 'logo.png');
-        },
-        success: function() {
-          $('#image' + title).attr('src', 'committeeHeadshots/' + encodeURI(name) + '.png');
-        }
-      })    
-      
-      execHTML += '<img src="' + url + '" id="image' + title + '"/>';
-      
-      execHTML += '<br>';
-      execHTML += '<p>' + name + ', ' + major + '</p?>';
-    }
+    buttonsHTML += '<button class="btn btn-secondary active" id="buttonExec" type="button" data-toggle="collapse" data-target="#infoExec" data-parent="#committeeList" href="#infoExec" role="button" aria-expanded="false" aria-controls="infoExec" onclick="changeCommittee(\'Exec\')">Exec</button>';
     
-    $("#execTab > div").html(execHTML);
-    
-    let committees = MESC.committees;
-    
-    let committeeHTML = '';
+    let committees = committeeJSON.committees;
     
     for (committee in committees) {
-      let title = committee.replace(' ', '_');
-      let name = committees[committee].head.name;
-      let major = committees[committee].head.major;
+      let committeeNameEncoded = committee.replace(/[ -']/g, '');
       
-      committeeHTML += '<div class="card">';
-        committeeHTML += '<div class="card-header" id="heading' + title + '">';
-          committeeHTML += '<h2 class="mb-0">';
-            committeeHTML += '<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse' + title + '" aria-expanded="false" aria-controls="#collapse' + title + '">' + committee + '</button>';
-          committeeHTML += '</h2>';
-        committeeHTML += '</div>';
-        committeeHTML += '<div id="collapse' + title + '" class="collapse" aria-labelledby="heading' + title + '" data-parent="#committee">';
-          committeeHTML += '<div class="card-body"><h5>Committee Head</h5><p>' + name + ', ' + major + '</p>';
-          
-          let url = 'committeeHeadshots/' + encodeURI(name) + '.png';
-
-          $.ajax({
-            url: url,
-            type: 'HEAD',
-            error: function() {
-                $('#image' + title).attr('src', 'logo.png');
-            },
-            success: function() {
-              $('#image' + title).attr('src', 'committeeHeadshots/' + encodeURI(name) + '.png');
-            }
-          })    
-          
-          committeeHTML += '<img src="' + url + '" id="image' + title + '"/>';
-      
-          let members = committees[committee].members;
-
-          if (Array.isArray(members) && members.length) {
-            committeeHTML += '<h5>Members</h5><ul>';
-            for (i = 0; i < members.length; i++) {
-              let name = members[i].name;
-              let major = members[i].major;
-              
-              committeeHTML += '<li>' + name + ', '  + major + '</li>';
-            }
-            
-            committeeHTML += '</ul>';
-          }
-      
-          committeeHTML += '</div>';
-        committeeHTML += '</div>';
-      committeeHTML += '</div>';
-    }
-        
-    $("#committee").html($("#committee").html() + committeeHTML);
+      buttonsHTML += '<button class="btn btn-secondary" id="button' + committeeNameEncoded + '" type="button" data-toggle="collapse" data-target="#info' + committeeNameEncoded + '" data-parent="#committeeList" href="#info' + committeeNameEncoded + '" role="button" aria-expanded="false" aria-controls="info' + committeeNameEncoded + '" onclick="changeCommittee(\'' + committee + '\')">' + committee + '</button>';    }
+    
+    $("#committeeList").html(buttonsHTML);
   });
+}
+
+function changeCommittee(committeeName) {
+  $.getJSON("committee.json", function(committeeJSON) {
+    let committeeNameEncoded = committeeName.replace(/[ -']/g, '');
+
+    $(".btn").removeClass("active");
+    $("#button" + committeeNameEncoded).addClass("active");
+
+    let committeeHTML = '';
+
+    switch (committeeNameEncoded) {
+      case 'Exec':
+        for (office in committeeJSON.exec) {
+          let officerName = committeeJSON.exec[office].name;
+          let officerMajor = committeeJSON.exec[office].major;
+          
+          committeeHTML += '<h3>' + office + ': ' + officerName + ', ' + officerMajor + '</h3>';
+          committeeHTML += getImage(officerName, office);
+        }
+        break;
+
+      case 'NewMembers':
+        let head1Name = committeeJSON.committees[committeeName].head1.name;
+        let head1Major = committeeJSON.committees[committeeName].head1.major;
+        committeeHTML += '<h3>Co-Head: ' + head1Name + ', ' + head1Major + '</h3>';
+        committeeHTML += getImage(head1Name, 'NewMembersHead1');
+
+        let head2Name = committeeJSON.committees[committeeName].head2.name;
+        let head2Major = committeeJSON.committees[committeeName].head2.major;
+        committeeHTML += '<h3>Co-Head: ' + head2Name + ', ' + head2Major + '</h3>';
+        committeeHTML += getImage(head2Name, 'NewMembersHead2');
+
+        break;
+
+      default:
+        let headName = committeeJSON.committees[committeeName].head.name;
+        let headMajor = committeeJSON.committees[committeeName].head.major;
+
+        committeeHTML += '<h3>Head: ' + headName + ', ' + headMajor + '</h3>';
+        committeeHTML += getImage(headName, committeeNameEncoded);
+        
+        break;
+    }
+
+    $("#committee").html(committeeHTML);
+  });
+}
+
+function getImage(name, title) {
+  let imgHTML = '';
+  title = title.replace(/[ -']/g, '');
+  
+  let url = 'committeeHeadshots/' + encodeURI(name) + '.png';
+
+  $.ajax({
+    url: url,
+    type: 'HEAD',
+    error: function() {
+        $('#image' + title).attr('src', 'logo.png');
+    },
+    success: function() {
+      $('#image' + title).attr('src', 'committeeHeadshots/' + encodeURI(name) + '.png');
+    }
+  })    
+
+  imgHTML += '<img src="' + url + '" id="image' + title + '"/>';
+    
+  return imgHTML;
 }

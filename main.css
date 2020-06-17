@@ -42,14 +42,38 @@ h1 {
   padding: 10px;
 }
 
-#mission p {
+.aboutUsContainer > p {
   width: 80%;
   margin: 0px auto;
   text-align: center;
 }
 
+#committeeList {
+  width: 15%;
+  float: left;
+  height: 400px;
+}
+
+#committeeList > button {
+  height: 40px;
+}
+
+#committee {
+  width: 84%;
+  float: right;
+  background-color: whitesmoke;
+  border-radius: 4px;
+  height: 400px;
+  overflow: scroll;
+  padding: 10px;
+}
+
+#committee h3 {
+  font-size: 16pt;
+}
+
 #committee img {
-  height: 300px;
+  height: 150px;
 }
 
 .eventsContainer {
@@ -68,6 +92,11 @@ h1 {
 
 .contactContainer > form {
   text-align: left;
+}
+
+#centeredButtonWrapper {
+  text-align: center;
+  padding-top: 10px;
 }
 
 #footer {

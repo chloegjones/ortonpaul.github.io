@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2/moment.min.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
   </head>
-  <body onload="getCommittee()">
+  <body onload="loadCommittee()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="index.html">
         <img src="logo.png" width="30" height="30" alt="MESC Logo">
@@ -43,27 +43,27 @@
       </div>
     </nav>
     
-    <div class="aboutUsContainer" id="mission">
+    <div class="aboutUsContainer">
       <h1>Our Mission</h1>
       <p>The Mizzou Engineering Student Council exists to promote student involvement with the University of Missouri, College of Engineering, improve student-faculty relationships, and evaluate matters related to the College of Engineering</p>
     </div>
-    
+        
     <div class="aboutUsContainer">
-      <h1>Meet the Comittee</h1>
-      <div class="accordion" id="committee">
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#execTab" aria-expanded="false" aria-controls="execTab">
-                Exec
-              </button>
-            </h2>
-          </div>
-          <div id="execTab" class="collapse" aria-labelledby="headingExec" data-parent="#committee">
-            <div class="card-body">
-            </div>
-          </div>
-        </div>        
+      <h1>Meet the Committee</h1>
+      <p>Hit any of the buttons below to see who is on each of our committees!</p>
+      <div class="clear" id="committeeWrapper">
+        <div class="btn-group-vertical" id="committeeList">
+        </div>
+        <div id="committee">
+        </div>
+      </div>
+    </div>
+        
+    <div class="aboutUsContainer">
+      <h1>NAESC</h1>
+      <p>The National Association for Engineering Student Councils (NAESC) is MESC's parent organization. To learn more about what they do, and how you can get involved, click the button below!</p>
+      <div id="centeredButtonWrapper">
+        <a class="btn btn-secondary" href="https://www.naesc.org/">NAESC</a>
       </div>
     </div>
         
