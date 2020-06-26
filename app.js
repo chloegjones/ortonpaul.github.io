@@ -48,22 +48,36 @@ function changeCommittee(committeeName) {
         for (office in committeeJSON.exec) {
           let officerName = committeeJSON.exec[office].name;
           let officerMajor = committeeJSON.exec[office].major;
-          
-          committeeHTML += '<h3>' + office + ': ' + officerName + ', ' + officerMajor + '</h3>';
+                    
+          committeeHTML += '<div class="card">';
           committeeHTML += getImage(officerName, office);
+          committeeHTML += '<div class="card-body">';
+          committeeHTML += '<h5 class="card-title">' + office + '</h5>';
+          committeeHTML += '<p class="card-text">' + officerName + ', ' + officerMajor + '</p>';
+          committeeHTML += '</div></div>';
         }
         break;
 
       case 'NewMembers':
         let head1Name = committeeJSON.committees[committeeName].head1.name;
         let head1Major = committeeJSON.committees[committeeName].head1.major;
-        committeeHTML += '<h3>Co-Head: ' + head1Name + ', ' + head1Major + '</h3>';
+        
+        committeeHTML += '<div class="card">';
         committeeHTML += getImage(head1Name, 'NewMembersHead1');
-
+        committeeHTML += '<div class="card-body">';
+        committeeHTML += '<h5 class="card-title">Co-Committee Head</h5>';
+        committeeHTML += '<p class="card-text">' + head1Name + ', ' + head1Major + '</p>';
+        committeeHTML += '</div></div>';
+        
         let head2Name = committeeJSON.committees[committeeName].head2.name;
         let head2Major = committeeJSON.committees[committeeName].head2.major;
-        committeeHTML += '<h3>Co-Head: ' + head2Name + ', ' + head2Major + '</h3>';
+        
+        committeeHTML += '<div class="card">';
         committeeHTML += getImage(head2Name, 'NewMembersHead2');
+        committeeHTML += '<div class="card-body">';
+        committeeHTML += '<h5 class="card-title">Co-Committee Head</h5>';
+        committeeHTML += '<p class="card-text">' + head2Name + ', ' + head2Major + '</p>';
+        committeeHTML += '</div></div>';
 
         break;
 
@@ -71,8 +85,12 @@ function changeCommittee(committeeName) {
         let headName = committeeJSON.committees[committeeName].head.name;
         let headMajor = committeeJSON.committees[committeeName].head.major;
 
-        committeeHTML += '<h3>Head: ' + headName + ', ' + headMajor + '</h3>';
-        committeeHTML += getImage(headName, committeeNameEncoded);
+        committeeHTML += '<div class="card">';
+        committeeHTML += getImage(headName, 'NewMembersHead2');
+        committeeHTML += '<div class="card-body">';
+        committeeHTML += '<h5 class="card-title">Committee Head</h5>';
+        committeeHTML += '<p class="card-text">' + headName + ', ' + headMajor + '</p>';
+        committeeHTML += '</div></div>';
         
         break;
     }
@@ -85,7 +103,7 @@ function getImage(name, title) {
   let imgHTML = '';
   title = title.replace(/[ -']/g, '');
   
-  let url = 'committeeHeadshots/' + encodeURI(name) + '.png';
+  let url = 'committeeHeadshots/' + encodeURI(name) + '.jpeg';
 
   $.ajax({
     url: url,
@@ -94,11 +112,11 @@ function getImage(name, title) {
         $('#image' + title).attr('src', 'logo.png');
     },
     success: function() {
-      $('#image' + title).attr('src', 'committeeHeadshots/' + encodeURI(name) + '.png');
+      $('#image' + title).attr('src', 'committeeHeadshots/' + encodeURI(name) + '.jpeg');
     }
   })    
 
-  imgHTML += '<img src="' + url + '" id="image' + title + '"/>';
+  imgHTML += '<img class="card-img-top" src="' + url + '" id="image' + title + '" alt="Card image cap"/>';
     
   return imgHTML;
 }

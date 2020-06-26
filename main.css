@@ -69,12 +69,18 @@ h1 {
   padding: 10px;
 }
 
-#committee h3 {
-  font-size: 16pt;
+#committee .card {
+  margin: 10px;
+  width: 30%;
+  max-width: 175px;
 }
 
-#committee img {
-  height: 150px;
+#committee h5 {
+  font-size: 1vw;
+}
+
+#committee p {
+  font-size: 10pt;
 }
 
 .eventsContainer {
