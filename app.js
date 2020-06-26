@@ -96,6 +96,7 @@ function changeCommittee(committeeName) {
     }
 
     $("#committee").html(committeeHTML);
+    updateSizes();
   });
 }
 
@@ -119,4 +120,24 @@ function getImage(name, title) {
   imgHTML += '<img class="card-img-top" src="' + url + '" id="image' + title + '" alt="Card image cap"/>';
     
   return imgHTML;
+}
+
+function updateSizes() {
+    var cards = document.querySelectorAll("#committee .card");
+  
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      
+      if($(window).width() < 800) {
+        card.style.width = "100%";
+      } else {
+        card.style.width = "17%";
+      }
+    }
+  
+    if ($(window).width() < 800 ) {
+      $("#committee").removeClass("d-flex").addClass("flex-wrap");
+    } else {
+      $("#committee").removeClass("flex-wrap").addClass("d-flex");
+    }
 }

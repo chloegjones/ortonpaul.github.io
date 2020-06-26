@@ -54,7 +54,7 @@
       <div class="clear" id="committeeWrapper">
         <div class="btn-group-vertical" id="committeeList">
         </div>
-        <div class="d-flex justify-content-center" id="committee">
+        <div class="justify-content-center" id="committee">
         </div>
       </div>
     </div>
@@ -73,14 +73,8 @@
     
     <button type="button" onclick="toTop()" id="toTopButton">Back to Top</button>
     <script>
-      $(window).on("load, resize", function() {
-        if ($(window).width() < 800 ) {
-          $("#committee").removeClass("d-flex").addClass("flex-wrap");
-          $("#committee .card").css("width", "100%");
-        } else {
-          $("#committee").removeClass("flex-wrap").addClass("d-flex");
-          $("#committee .card").css("width", "17%");
-        }
+      $(window).on("resize", function() {
+        updateSizes();
       });
     </script>
   </body>
