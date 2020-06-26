@@ -71,12 +71,12 @@ h1 {
 
 #committee .card {
   margin: 10px;
-  width: 30%;
-  max-width: 175px;
+  width: 17%;
 }
 
 #committee h5 {
-  font-size: 1vw;
+  font-size: 12pt;
+  margin-bottom: 0px;
 }
 
 #committee p {
@@ -88,7 +88,6 @@ h1 {
   margin: 10px auto;
   padding: 10px;
 }
-
 
 .contactContainer {
   background-color: lightgray;

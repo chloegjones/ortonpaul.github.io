@@ -72,5 +72,16 @@
     </div>
     
     <button type="button" onclick="toTop()" id="toTopButton">Back to Top</button>
+    <script>
+      $(window).on("load, resize", function() {
+        if ($(window).width() < 800 ) {
+          $("#committee").removeClass("d-flex").addClass("flex-wrap");
+          $("#committee .card").css("width", "100%");
+        } else {
+          $("#committee").removeClass("flex-wrap").addClass("d-flex");
+          $("#committee .card").css("width", "17%");
+        }
+      });
+    </script>
   </body>
 </html>
