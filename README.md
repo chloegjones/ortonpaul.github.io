@@ -1,4 +1,5 @@
 # MESC-Website
+[Visit the site](https://ortonpaul.github.io)
 
 ## Upkeep
 ### Meet the Committee Section
