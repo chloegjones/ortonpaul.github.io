@@ -76,43 +76,137 @@
         </div>
       </div>
       <script>
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
+        var upcomingRequest = new XMLHttpRequest();
+        upcomingRequest.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             let events = JSON.parse(this.responseText).items;
             var i = 1;
+            let nextMeetingFound = false;
+            
             events.forEach(function(event) {
-              console.dir(event);
-              $('#event' + i + ' .card-title').html(event.summary);
-                            
-              if(event.start.date) {
-                $('#event' + i + ' .card-text').html(formatDate(event.start.date));
-              } else if (event.start.dateTime){
-                $('#event' + i + ' .card-text').html(formatDateTime(event.start.dateTime));
+              if(!event.summary.includes('Meeting')) {
+                $('#event' + i + ' .card-title').html(event.summary);
+
+                if(event.start.date) {
+                  $('#event' + i + ' .card-text').html(formatDate(event.start.date));
+                } else if (event.start.dateTime){
+                  $('#event' + i + ' .card-text').html(formatDateTime(event.start.dateTime));
+                }
+
+                if(event.location) {
+                  $('#event' + i + ' .card-text').html($('#event' + i + ' .card-text').html() + ' at ' + event.location);
+                }
+
+                let eventID = event.htmlLink.split('=')[1];
+
+                $('#add' + i).attr("href", "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=" + eventID + "&tmsrc=sck85nn95kq4ckmviamev6r58o@group.calendar.google.com&catt=false&pprop=HowCreated:DUPLICATE&hl=en&scp=ONE");
+
+                i++
+                } else if (!nextMeetingFound) {
+                  
+                  $('#nextMeeting .card-text').html(event.summary + '<br>');
+
+                  if(event.start.date) {
+                    $('#nextMeeting .card-text').html($('#nextMeeting .card-text').html() + formatDate(event.start.date));
+                  } else if (event.start.dateTime){
+                    $('#nextMeeting .card-text').html($('#nextMeeting .card-text').html() + formatDateTime(event.start.dateTime));
+                  }
+
+                  if(event.location) {
+                    $('#nextMeeting .card-text').html($('#nextMeeting .card-text').html() + ' at ' + event.location);
+                  }
+
+                  let eventID = event.htmlLink.split('=')[1];
+
+                  $('#addNextMeeting').attr("href", "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=" + eventID + "&tmsrc=sck85nn95kq4ckmviamev6r58o@group.calendar.google.com&catt=false&pprop=HowCreated:DUPLICATE&hl=en&scp=ONE");
+                  
+                  nextMeetingFound = true;
+                }
+              
+              if (i > 3 && nextMeetingFound) {
+                return;
               }
-              
-              if(event.location) {
-                $('#event' + i + ' .card-text').html($('#event' + i + ' .card-text').html() + ' at ' + event.location);
-              }
-              
-              let eventID = event.htmlLink.split('=')[1];
-              
-              $('#add' + i).attr("href", "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=" + eventID + "&tmsrc=sck85nn95kq4ckmviamev6r58o@group.calendar.google.com&catt=false&pprop=HowCreated:DUPLICATE&hl=en&scp=ONE");
-              
-              i++
             });
           }
         };
-        request.open("GET", "https://www.googleapis.com/calendar/v3/calendars/sck85nn95kq4ckmviamev6r58o@group.calendar.google.com/events?maxResults=3&orderBy=startTime&singleEvents=true&timeMin=2020-08-01T10%3A00%3A00Z&key=AIzaSyBNeuV_Om6o0VoofgdMvrEIPYQ7RTz3BjI", true);
-        request.send();
-        $("#event1 .card-text").html('<img src="loading.gif"/>');
-        $("#event2 .card-text").html('<img src="loading.gif"/>');
-        $("#event3 .card-text").html('<img src="loading.gif"/>');
+        function pad(n){return n<10 ? '0'+n : n}
+        let now = new Date();
+        now = now.getFullYear()+'-'
+        + pad(now.getMonth()+1)+'-'
+        + pad(now.getDate())+'T'
+        + pad(now.getHours())+':'
+        + pad(now.getMinutes())+':'
+        + pad(now.getSeconds())+'Z';
+                
+        upcomingRequest.open("GET", "https://www.googleapis.com/calendar/v3/calendars/sck85nn95kq4ckmviamev6r58o@group.calendar.google.com/events?orderBy=startTime&sortingOrder=ascending&singleEvents=true&timeMin=" + now + "&key=AIzaSyBNeuV_Om6o0VoofgdMvrEIPYQ7RTz3BjI", true);
+        upcomingRequest.send();
       </script>
     </div>
         
     <div class="eventsContainer">
       <h1>Meetings</h1>
+      <div class="row">
+        <div class="col-sm-6" id="lastMeeting">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Last Meeting</h5>
+              <p class="card-text"></p>
+              <a href="" class="btn btn-secondary" id="lastMeetingMinutes" target="_blank">Minutes</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6" id="nextMeeting">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Next Meeting</h5>
+              <p class="card-text"></p>
+              <a href="" class="btn btn-secondary" id="addNextMeeting" target="_blank">Add to My Calendar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        var pastRequest = new XMLHttpRequest();
+        pastRequest.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            let events = JSON.parse(this.responseText).items;
+            let lastMeetingFound = false;
+            
+            events.forEach(function(event) {
+              if(event.summary.includes('Meeting')) {
+                $('#lastMeeting .card-text').html(event.summary + '<br>');
+                
+                if(event.start.date) {
+                  $('#lastMeeting .card-text').html($('#lastMeeting .card-text').html() + formatDate(event.start.date));
+                } else if (event.start.dateTime){
+                  $('#lastMeeting .card-text').html($('#lastMeeting .card-text').html() + formatDate(event.start.dateTime.substring(0,10)));
+                }
+                
+                if(event.location) {
+                  $('#lastMeeting .card-text').html($('#lastMeeting .card-text').html() + ' at ' + event.location);
+                }
+                
+                if (event.attachments) {
+                  let minutesLink = event.attachments[0].fileUrl;
+                  
+                  $("#lastMeetingMinutes").attr("href", minutesLink);
+                  $("#lastMeetingMinutes").show();
+                } else {
+                  $("#lastMeetingMinutes").hide();
+                }            
+                
+                lastMeetingFound = true;
+              }
+              
+              if (lastMeetingFound) {
+                return;
+              }
+            });
+          }
+        };        
+        pastRequest.open("GET", "https://www.googleapis.com/calendar/v3/calendars/sck85nn95kq4ckmviamev6r58o@group.calendar.google.com/events?orderBy=startTime&sortingOrder=descending&singleEvents=true&timeMax=" + now + "&key=AIzaSyBNeuV_Om6o0VoofgdMvrEIPYQ7RTz3BjI", true);
+        pastRequest.send();
+      </script>
     </div>
     
     <div id="footer">

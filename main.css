@@ -82,10 +82,6 @@ h1 {
   font-size: 10pt;
 }
 
-#membersCard {
-  
-}
-
 .eventsContainer {
   background-color: lightgray;
   margin: 10px auto;
@@ -93,8 +89,8 @@ h1 {
   text-align: center;
 }
 
-.eventsContainer .card {
-  margin: 10px 0px;
+#meetingsContainer .card {
+  height: 202px;
 }
 
 .contactContainer {
