@@ -86,9 +86,13 @@
               $('#event' + i + ' .card-title').html(event.summary);
                             
               if(event.start.date) {
-                $('#event' + i + ' .card-text').html(formateDate(event.start.date) + '<br>All day');
+                $('#event' + i + ' .card-text').html(formatDate(event.start.date));
               } else if (event.start.dateTime){
-                $('#event' + i + ' .card-text').html(formateDate(event.start.dateTime.substring(0, 10)) + '<br>TIME');
+                $('#event' + i + ' .card-text').html(formatDateTime(event.start.dateTime));
+              }
+              
+              if(event.location) {
+                $('#event' + i + ' .card-text').html($('#event' + i + ' .card-text').html() + ' at ' + event.location);
               }
               
               let eventID = event.htmlLink.split('=')[1];

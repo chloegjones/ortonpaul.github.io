@@ -171,7 +171,7 @@ function updateSizes() {
     }
 }
 
-function formateDate(ISOdate) {
+function formatDate(ISOdate) {
   let date = new Date(ISOdate);
   date.setDate(date.getDate() + 1);
   let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -201,5 +201,52 @@ function formateDate(ISOdate) {
   
   dateString += date.getFullYear();
   
-  return dateString;
+  return dateString + '<br>All day';
+}
+
+function formatDateTime(ISOdateTime) {
+  let date = new Date(ISOdateTime);
+  date.setDate(date.getDate() + 1);
+  let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let dateString = '';
+  dateString += daysOfTheWeek[date.getDay()] + ', ';
+  dateString += months[date.getMonth()] + ' ';
+  dateString += date.getDate();
+  
+  switch (date.getDate() % 10) {
+    case 1:
+      dateString += 'st ';
+      break;
+      
+    case 2:
+      dateString += 'nd ';
+      break;
+      
+    case 3:
+      dateString += 'rd ';
+      break;
+      
+    default:
+      dateString += 'th ';
+      break;
+  }
+  
+  dateString += date.getFullYear();
+    
+  let timeString = '';
+  
+  let hours = date.getHours() % 12;
+  hours = hours ? hours : 12;
+  
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  
+  timeString += hours + ':';
+  timeString += minutes;
+  timeString += (date.getHours() > 12 ? ' PM' : ' AM');
+  
+  return dateString + '<br>' + timeString;
 }
