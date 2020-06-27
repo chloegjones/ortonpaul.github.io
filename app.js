@@ -78,6 +78,14 @@ function changeCommittee(committeeName) {
         committeeHTML += '<h5 class="card-title">Co-Committee Head</h5>';
         committeeHTML += '<p class="card-text">' + head2Name + ', ' + head2Major + '</p>';
         committeeHTML += '</div></div>';
+        
+        if (committeeJSON.committees[committeeName].members.length > 0) {
+          committeeHTML += '<div class="card" id="membersCard">';
+          committeeHTML += '<div class="card-body">';
+          committeeHTML += '<h5 class="card-title">Members</h5>';
+          committeeHTML += '<p class="card-text">' + getMembers(committeeName, committeeJSON) + '</p>';
+          committeeHTML += '</div></div>';
+        }
 
         break;
 
@@ -92,12 +100,33 @@ function changeCommittee(committeeName) {
         committeeHTML += '<p class="card-text">' + headName + ', ' + headMajor + '</p>';
         committeeHTML += '</div></div>';
         
+        if (committeeJSON.committees[committeeName].members.length > 0) {
+          committeeHTML += '<div class="card" id="membersCard">';
+          committeeHTML += '<div class="card-body">';
+          committeeHTML += '<h5 class="card-title">Members</h5>';
+          committeeHTML += '<p class="card-text">' + getMembers(committeeName, committeeJSON) + '</p>';
+          committeeHTML += '</div></div>';
+        }
+                
         break;
     }
-
+    
     $("#committee").html(committeeHTML);
     updateSizes();
   });
+}
+
+function getMembers(committeeName, committeeJSON) {
+  let members = committeeJSON.committees[committeeName].members;
+  
+  let membersString = '<ul>';
+  
+  for (member in members) {
+    membersString += '<li>' + members[member].name + ', ' + members[member].major + '</li>';
+  }
+  
+  membersString += '</ul>';
+  return membersString;
 }
 
 function getImage(name, title) {
@@ -140,4 +169,37 @@ function updateSizes() {
     } else {
       $("#committee").removeClass("flex-wrap").addClass("d-flex");
     }
+}
+
+function formateDate(ISOdate) {
+  let date = new Date(ISOdate);
+  date.setDate(date.getDate() + 1);
+  let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let dateString = '';
+  dateString += daysOfTheWeek[date.getDay()] + ', ';
+  dateString += months[date.getMonth()] + ' ';
+  dateString += date.getDate();
+  
+  switch (date.getDate() % 10) {
+    case 1:
+      dateString += 'st ';
+      break;
+      
+    case 2:
+      dateString += 'nd ';
+      break;
+      
+    case 3:
+      dateString += 'rd ';
+      break;
+      
+    default:
+      dateString += 'th ';
+      break;
+  }
+  
+  dateString += date.getFullYear();
+  
+  return dateString;
 }

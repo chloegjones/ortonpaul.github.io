@@ -30,13 +30,25 @@
       "head": {
         "name": "Camila Leiva",
         "major": "Chemical Engineeering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "K-12": {
       "head": {
         "name": "Abigail Penfield",
         "major": "Biomedical Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "New Members": {
       "head1": {
@@ -46,31 +58,61 @@
       "head2": {
         "name": "Morgan Hanley",
         "major": "Chemical Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "Professional Outreach": {
       "head": {
         "name": "Julia Olson",
         "major": "Industrial Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "Social": {
       "head": {
         "name": "Bella Bowers",
         "major": "Biomedical Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "Merch": {
       "head": {
         "name": "Lauren Baratta",
         "major": "Chemical Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "Public Relations": {
       "head": {
         "name": "Diana de la Cruz",
         "major": "Chemical Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     },
     "Large Events": {
       "head": {
@@ -88,7 +130,13 @@
       "head": {
         "name": "Ethan Rackers",
         "major": "Civil Engineering"
-      }
+      },
+      "members": [
+        {
+          "name": "Member 1",
+          "major": "Major"
+        }
+      ]
     }
   }
 }

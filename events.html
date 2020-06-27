@@ -45,7 +45,66 @@
     </nav>
     
     <div class="eventsContainer">
-      <h1>Events</h1>
+      <h1>Upcoming Events</h1>
+      <div class="row">
+        <div class="col-sm-4" id="event1">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text"></p>
+              <a href="" class="btn btn-secondary" id="add1" target="_blank">Add to My Calendar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4" id="event2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text"></p>
+              <a href="" class="btn btn-secondary" id="add2" target="_blank">Add to My Calendar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4" id="event3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text"></p>
+              <a href="" class="btn btn-secondary" id="add3" target="_blank">Add to My Calendar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            let events = JSON.parse(this.responseText).items;
+            var i = 1;
+            events.forEach(function(event) {
+              console.dir(event);
+              $('#event' + i + ' .card-title').html(event.summary);
+                            
+              if(event.start.date) {
+                $('#event' + i + ' .card-text').html(formateDate(event.start.date) + '<br>All day');
+              } else if (event.start.dateTime){
+                $('#event' + i + ' .card-text').html(formateDate(event.start.dateTime.substring(0, 10)) + '<br>TIME');
+              }
+              
+              let eventID = event.htmlLink.split('=')[1];
+              
+              $('#add' + i).attr("href", "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=" + eventID + "&tmsrc=sck85nn95kq4ckmviamev6r58o@group.calendar.google.com&catt=false&pprop=HowCreated:DUPLICATE&hl=en&scp=ONE");
+              
+              i++
+            });
+          }
+        };
+        request.open("GET", "https://www.googleapis.com/calendar/v3/calendars/sck85nn95kq4ckmviamev6r58o@group.calendar.google.com/events?maxResults=3&orderBy=startTime&singleEvents=true&timeMin=2020-08-01T10%3A00%3A00Z&key=AIzaSyBNeuV_Om6o0VoofgdMvrEIPYQ7RTz3BjI", true);
+        request.send();
+        $("#event1 .card-text").html('<img src="loading.gif"/>');
+        $("#event2 .card-text").html('<img src="loading.gif"/>');
+        $("#event3 .card-text").html('<img src="loading.gif"/>');
+      </script>
     </div>
         
     <div class="eventsContainer">
